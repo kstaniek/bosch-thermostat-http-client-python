@@ -1,7 +1,7 @@
 import asyncio
 
 HEATING_CIRCUITS = '/heatingCircuits' # get all heating Circuits
-
+HEATING_CIRCUIT_OPERATION_MODE = '/heatingCircuits/{}/operationMode'
 
 
 class HeatingCircuits(object):
@@ -29,7 +29,7 @@ class HeatingCircuit(object):
     currentSetPoint = None
     currentTemperature = None
 
-    def __init__(self, request, hc_name):
+    def __init__(self, request, submit, hc_name):
         self._request = request
         self.name = hc_name
 
@@ -44,3 +44,8 @@ class HeatingCircuit(object):
         result =  await self._request(path)
         self.operationMode = result['value']
         self.operationList = result['allowedValues']
+    
+    
+    def set_mode(self,new_mode):
+        if new_mode in operationList:
+            self._submit(
